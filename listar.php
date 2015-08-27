@@ -1,4 +1,7 @@
-<?php require_once './header.php'; ?>
+<?php
+require_once './header.php';
+require_once './Aluno.php';
+?>
 
 <?php if (!isset($_GET['modo'])): ?>
 
@@ -7,24 +10,28 @@
 <?php elseif ($_GET['modo'] != 'todos' && $_GET['modo'] != 'top3'): ?>
     <?php require_once './submenu.php'; ?>
 <?php else: ?>
-    <ul> 
-        <table>
-            <caption><?= $_GET['modo'] == 'todos' ? "Todos os alunos" : "3 Maiores notas"; ?></caption>
-            <thead>
-                <tr>
-                    <td>Código</td>
-                    <td>Nome</td>
-                    <td>Nota</td>
-                </tr>
-            </thead>
+    <table>
+        <caption><?= $_GET['modo'] == 'todos' ? "Todos os alunos" : "3 Maiores notas"; ?></caption>
+        <thead>
+            <tr>
+                <td>Código</td>
+                <td>Nome</td>
+                <td>Nota</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </thead>
 
-            <tbody>
-                <?php exibeAlunos($_GET['modo']); ?>
-            </tbody>
-        </table>
-    </ul>
+        <tbody>
+            <?php exibeAlunos($_GET['modo']); ?>
+        </tbody>
+    </table>
 <?php
 endif;
+?>
+<a href="updateAluno.php?operacao=inserir">Inserir</a>
+
+<?php
 
 //Função para retornar os alunos
 function exibeAlunos($modo = "todos") {
@@ -36,9 +43,9 @@ function exibeAlunos($modo = "todos") {
                 . " Erro:" . $ex->getCode());
     }
 
-    $query = $_GET['modo'] == 'todos' ? "SELECT * FROM alunos ORDER BY id" : "SELECT * FROM alunos ORDER BY nota DESC limit 3";
+    $order = $_GET['modo'] == 'todos' ? "ORDER BY id" : " ORDER BY nota DESC limit 3";
 
-    foreach ($conexao->query($query) as $alunos) {
-        echo "<tr><td>{$alunos['id']}</td><td>{$alunos['nome']}</td><td>{$alunos['nota']}</td></tr>";
+    foreach ((new Aluno($conexao))->listar($order) as $alunos) {
+        echo "<tr><td>{$alunos['id']}</td><td>{$alunos['nome']}</td><td>{$alunos['nota']}</td><td><a href='updateAluno.php?operacao=editar&id={$alunos['id']}'>Editar</a></td></tr>";
     }
 }

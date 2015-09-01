@@ -28,3 +28,13 @@ INSERT INTO escola(nome,nota) VALUES('Babi',6);
 INSERT INTO escola(nome,nota) VALUES('Carolina',5);
 INSERT INTO escola(nome,nota) VALUES('Lovaina',4);
 INSERT INTO escola(nome,nota) VALUES('Cristina',4);
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(50) DEFAULT NULL,
+  `senha` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO usuarios(usuario,senha) VALUES('miiller','teste');
+INSERT INTO usuarios(usuario,senha) VALUES('wesley','school');

@@ -8,13 +8,20 @@ if (!isset($_GET['operacao'])) {
     $titulo = "Inserindo Aluno";
 } else {
     $operacao = $_GET['operacao'];
-    if ($operacao != 'inserir' && $operacao != 'editar') {
+    if ($operacao != 'inserir' && $operacao != 'editar' && $operacao != 'excluir') {
         header("location:index.php");
     } elseif ($operacao == 'editar') {
         $titulo = "Editando Aluno";
-        $aluno = (new Aluno(Conexao::getInstancia()))->Get($_GET['id']);
+        $aluno = new Aluno();
+        $serviceDb = new ServiceDb($aluno);
+        $aluno = $serviceDb->Get($_GET['id']);
+    } elseif($operacao == 'excluir'){
+        $titulo = "Excluindo Aluno";
+        $serviceDb = new ServiceDb(new Aluno());
+        $serviceDb->Remover($_GET['id']);
+        header("location:listaraluno.php?modo=todos");
     }
-    else{
+    else {
         $titulo = "Inserindo Aluno";
     }
 }
@@ -22,7 +29,7 @@ if (!isset($_GET['operacao'])) {
 
 
 <section>
-    <form method="POST" action="salvar.php?tipo=<?= $operacao; ?>">
+    <form method="POST" action="salvarAluno.php?tipo=<?= $operacao; ?>">
         <fieldset>
             <legend><?= $titulo; ?></legend>
 

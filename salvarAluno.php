@@ -2,26 +2,28 @@
 
 require_once './Conexao.php';
 require_once './Aluno.php';
+require_once './ServiceDb.php';
 
 if ($_POST) {
-//    print_r($_POST);
     if (!isset($_GET['tipo'])) {
-        header("location:listar.php?modo=todos");
+        header("location:listarAluno.php?modo=todos");
     } else {
         if ($_GET['tipo'] == 'editar') {
             $aluno = new Aluno(Conexao::getInstancia());
             $aluno->setId($_POST['id'])
                     ->setNome($_POST['nome'])
                     ->setNota($_POST['nota']);
-            $aluno->Alterar();
+            $serviceDb = new ServiceDb($aluno);
+            $serviceDb->Alterar();
         } else {
             $aluno = new Aluno(Conexao::getInstancia());
             $aluno->setNome($_POST['nome'])
                     ->setNota($_POST['nota']);
-            $aluno->Inserir();
+            $serviceDb = new ServiceDb($aluno);
+            $serviceDb->Inserir($aluno);
         }
-        header("location:listar.php?modo=todos");
+        header("location:listarAluno.php?modo=todos");
     }
 } else {
-    header("location:listar.php?modo=todos");
+    header("location:listaraluno.php?modo=todos");
 }

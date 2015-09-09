@@ -4,6 +4,10 @@ require_once './Conexao.php';
 require_once './Usuario.php';
 require_once './ServiceDb.php';
 
+if (!isset($_SESSION['logado'])) {
+    header("location:login.php");
+}
+
 if (!isset($_GET['operacao'])) {
     $operacao = "inserir";
     $titulo = "Inserindo Usuario";
@@ -15,13 +19,12 @@ if (!isset($_GET['operacao'])) {
         $titulo = "Editando Usuario";
         $serviceDb = new ServiceDb(new Usuario());
         $usuario = $serviceDb->Get($_GET['id']);
-    } elseif($operacao == 'excluir'){
+    } elseif ($operacao == 'excluir') {
         $titulo = "Excluindo Usuario";
         $serviceDb = new ServiceDb(new Usuario());
         $serviceDb->Remover($_GET['id']);
         header("location:usuarios.php");
-    }
-    else {
+    } else {
         $titulo = "Inserindo Usuario";
     }
 }

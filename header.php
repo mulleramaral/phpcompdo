@@ -1,10 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['logado'])){
-    header("location:login.php");
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -26,11 +22,18 @@ if(!isset($_SESSION['logado'])){
     </head>
     <body>
         <h1>School of Net</h1>
-        
-        <ul id="logout">
-            <li><a href="logout.php">Sair</a></li>
-        </ul>
-        
+
+        <?php
+        if (isset($_SESSION['logado'])):
+            ?>
+            <ul id="logout">
+                <li><a href="logout.php">Sair</a></li>
+            </ul>
+        <?php else: ?>
+            <ul id="logout">
+                <li><a href="login.php">Acessar área restrita</a></li>
+            </ul>
+        <?php endif; ?>
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
@@ -38,5 +41,4 @@ if(!isset($_SESSION['logado'])){
                 <?php require_once './submenu.php'; ?>
             </ul>
         </nav>
-        
-        
+

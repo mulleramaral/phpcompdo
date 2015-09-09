@@ -3,6 +3,10 @@ require_once './header.php';
 require_once './Conexao.php';
 require_once './Aluno.php';
 
+if (!isset($_SESSION['logado'])) {
+    header("location:login.php");
+}
+
 if (!isset($_GET['operacao'])) {
     $operacao = "inserir";
     $titulo = "Inserindo Aluno";
@@ -26,8 +30,6 @@ if (!isset($_GET['operacao'])) {
     }
 }
 ?>
-
-
 <section>
     <form method="POST" action="salvarAluno.php?tipo=<?= $operacao; ?>">
         <fieldset>

@@ -73,8 +73,11 @@ function exibeAlunos($modo = "todos") {
         $serviceDb = new ServiceDb(new Aluno());
         foreach ($serviceDb->listarPor($filtros) as $alunos) {
             echo "<tr><td>{$alunos['id']}</td><td>{$alunos['nome']}</td><td>{$alunos['nota']}</td>"
-            . "<td><a href='updateAluno.php?operacao=editar&id={$alunos['id']}'>Editar</a></td>"
-            . "<td><a href='updateAluno.php?operacao=excluir&id={$alunos['id']}'>Excluir</a></td></tr>";
+            . "<td><a href='updateAluno.php?operacao=editar&id={$alunos['id']}'>Editar</a></td>";
+            if(isset($_SESSION['logado'])){
+                echo "<td><a href='updateAluno.php?operacao=excluir&id={$alunos['id']}'>Excluir</a></td></tr>";
+            }
+            
         }
     } else {
         $order = $_GET['modo'] == 'todos' ? "ORDER BY id" : " ORDER BY nota DESC limit 3";
@@ -82,8 +85,11 @@ function exibeAlunos($modo = "todos") {
         $serviceDb = new ServiceDb($aluno);
         foreach ($serviceDb->listar($order) as $alunos) {
             echo "<tr><td>{$alunos['id']}</td><td>{$alunos['nome']}</td><td>{$alunos['nota']}</td>"
-            . "<td><a href='updateAluno.php?operacao=editar&id={$alunos['id']}'>Editar</a></td>"
-            . "<td><a href='updateAluno.php?operacao=excluir&id={$alunos['id']}'>Excluir</a></td></tr>";
+            . "<td><a href='updateAluno.php?operacao=editar&id={$alunos['id']}'>Editar</a></td>";
+            if(isset($_SESSION['logado'])){
+                echo "teste";
+                echo "<td><a href='updateAluno.php?operacao=excluir&id={$alunos['id']}'>Excluir</a></td></tr>";
+            }
         }
     }
 }

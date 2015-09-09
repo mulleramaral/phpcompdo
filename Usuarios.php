@@ -21,9 +21,17 @@ $serviceDb = new ServiceDb(new Usuario());
                 <tr>
                     <td><?= $usuario['id'] ?></td><td><?= $usuario['usuario']; ?></td>
                     <td><a href="updateUsuario.php?operacao=editar&id=<?= $usuario['id'] ?>">editar</a></td>
-                    <td><a href="updateUsuario.php?operacao=excluir&id=<?= $usuario['id'] ?>">remover</a></td>
+                    <?php
+                    if (isset($_SESSION['logado'])):
+                        ?>
+                        <td><a href = "updateUsuario.php?operacao=excluir&id=<?= $usuario['id'] ?>">remover</a></td>
+                        <?php
+                    endif;
+                    ?>
+
                 </tr>
-            <?php endforeach; ?>
+            <?php endforeach;
+            ?>
         </tbody>
     </table>
     <a href="updateUsuario.php?operacao=inserir">Inserir</a>

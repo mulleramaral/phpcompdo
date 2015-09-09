@@ -52,6 +52,7 @@ require_once './ServiceDb.php';
                         <label>Senha: <input type="password" name="senha"></label>
                         <p>
                             <input type="submit" name="submit" value="login">
+                            <a href="index.php">Cancelar</a>
                         </p>
                         <?php
                         if (isset($_COOKIE['senha'])) {

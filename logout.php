@@ -7,4 +7,4 @@ if(isset($_SESSION['logado'])){
     session_destroy();
 }
 
-header("location:login.php");
+header("location:index.php");
